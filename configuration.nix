@@ -54,7 +54,6 @@
        '';
 
   services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -90,17 +89,12 @@
     isNormalUser = true;
     description = "ben";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
-      firefox
-      wget
-      alacritty
-      stow
-      rofi
-      spice-vdagent
     ];
   };
 
-  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   # Home Manager
   home-manager = {
@@ -121,24 +115,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    thunderbird
   ];
 
   # fonts.packages = with pkgs; [
   #   (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   # ];
 
-  programs.zsh.enable = true;
-  programs.zsh.autosuggestions.enable = true;
-  programs.zsh.syntaxHighlighting.enable = true;
-
-  programs.tmux = {
-  	enable = true;
-	clock24 = true;
-	plugins = with pkgs; [
-		tmuxPlugins.catppuccin	
-	];
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

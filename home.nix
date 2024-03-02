@@ -24,36 +24,118 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    pkgs.neovim
-    pkgs.python38
-    pkgs.unzip
-    pkgs.gcc11
-    pkgs.neofetch
-    # pkgs.gh
-
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  home.packages = with pkgs; [
+    neovim
+    alacritty
+    stow
+    firefox
+    thunderbird
+    wget
+    python38
+    unzip
+    gcc11
+    neofetch
+    rofi
+    spice-vdagent
+    # ripgrep
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
+
+
+
+  programs = {
+    zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      syntaxHighlighting.enable = true;
+    };
+  };
+
+  programs = {
+    tmux = {
+      enable = true;
+      clock24 = true;
+      plugins = with pkgs; [
+	      tmuxPlugins.catppuccin	
+      ];
+      extraConfig = ''
+	# Set true colour
+	set -g default-terminal "$TERM"
+	set -ga terminal-overrides ",$TERM:Tc"
+
+	# Shift + Alt + Vim keys to switch back and forth between windows
+	bind -n M-H previous-window
+	bind -n M-L next-window
+
+	set -g @plugin 'tmux-plugins/tpm'
+	set -g @plugin 'tmux-plugins/tmux-sensible'
+	set -g @plugin 'christoomey/vim-tmux-navigator'
+	set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+	set -g @plugin 'tmux-plugins/tmux-yank'
+
+	# Start windows and panes at 1, not 0
+	set -g base-index 1
+	set -g pane-base-index 1
+	set-window-option -g pane-base-index 1
+	set-option -g renumber-windows on
+
+	set -g @catppuccin_flavour 'mocha'
+
+	# Rename window to current dir
+	set-option -g status-interval 5
+	set-option -g automatic-rename on
+	set-option -g automatic-rename-format '#{b:pane_current_path}'
+
+	# Set vi-mode
+	set-window-option -g mode-keys vi
+
+	# Reload config file (change file location to your the tmux.conf you want to use)
+	bind r source-file ~/.config/tmux/tmux.conf
+
+	# -- Keybindings --
+	# Set prefix
+	unbind C-b
+	set -g prefix C-Space
+	bind C-Space send-prefix
+
+	# Split panes using | and -
+	# In new panes, use current path as dir
+	# bind | split-window -h -c "#{pane_current_path}"
+	# bind - split-window -v -c "#{pane_current_path}"
+
+	# Split panes using \ and '
+	# In new panes, use current path as dir
+	bind \\ split-window -h -c "#{pane_current_path}"
+	bind \' split-window -v -c "#{pane_current_path}"
+	unbind '"'
+	unbind %
+
+	# vi mode:
+	# 1. Enter copy mode: <prefix>, [
+	# 2. Move around with vim keys
+	# 3. Select mode: v
+	# 	- Toggle select / rectangle-select using Ctrl + v
+	# 	- Yank: y
+	bind-key -T copy-mode-vi v send-keys -X begin-selection
+	bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+	bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+
+	# kill window without confirmation
+	bind-key x kill-pane
+      '';
+    };
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # ".config/i3/config".source = dotfiles/.config/i3/config;
+    ".zshrc".source = dotfiles/.zshrc;
+    # ".config/tmux/tmux.conf".source = dotfiles/.config/tmux/tmux.conf;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
