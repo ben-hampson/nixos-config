@@ -30,7 +30,7 @@
     pkgs.unzip
     pkgs.gcc11
     pkgs.neofetch
-    pkgs.gh
+    # pkgs.gh
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
