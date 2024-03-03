@@ -158,8 +158,10 @@
 
     ".local".source = dotfiles/.local;
     ".local".recursive = true;
+
     ".gitconfig".source = dotfiles/.gitconfig;
 
+    ".background-image".source = dotfiles/.background-image;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
