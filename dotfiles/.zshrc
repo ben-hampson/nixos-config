@@ -22,8 +22,6 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 plugins=(git asdf)
 
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 export LANG="en_GB.UTF-8"
 export EDITOR="nvim"
