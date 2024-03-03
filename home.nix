@@ -16,6 +16,18 @@
   	enable = true;
 	gitCredentialHelper.enable = true;
   };
+
+  programs.firefox = {
+    enable = true;
+    profiles.ben = {
+ # #  Unable to get pkgs so far.
+ #      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+	# ublock-origin
+	# vimium
+	# translate-web-pages
+ #      ];
+    };
+  };
   
 
   # This value determines the Home Manager release that your configuration is
@@ -33,7 +45,6 @@
     neovim
     alacritty
     stow
-    firefox
     thunderbird
     wget
     python38
