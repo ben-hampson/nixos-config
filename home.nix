@@ -135,7 +135,11 @@
   # plain files is through 'home.file'.
   home.file = {
     ".zshrc".source = dotfiles/.zshrc;
-    # ".config/tmux/tmux.conf".source = dotfiles/.config/tmux/tmux.conf;
+    ".config".source = dotfiles/.config;
+    ".config".recursive = true;
+    ".local".source = dotfiles/.local;
+    ".local".recursive = true;
+
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
