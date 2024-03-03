@@ -140,8 +140,22 @@
   # plain files is through 'home.file'.
   home.file = {
     ".zshrc".source = dotfiles/.zshrc;
-    ".config".source = dotfiles/.config;
-    ".config".recursive = true;
+    ".config/alacritty" =
+      { 
+	source = dotfiles/.config/alacritty;
+	recursive = true;
+      };
+
+    ".config/i3" =
+      { 
+	source = dotfiles/.config/i3;
+	recursive = true;
+      };
+
+    # mkOutOfStoreSymLink means lazy-lock.json is not read-only, so it can be updated when packages update 
+    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/etc/nixos/dotfiles/.config/nvim";
+    ".config/nvim".recursive = true;
+
     ".local".source = dotfiles/.local;
     ".local".recursive = true;
     ".gitconfig".source = dotfiles/.gitconfig;
