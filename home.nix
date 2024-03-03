@@ -11,6 +11,11 @@
 	userName = "ben-hampson";
 	userEmail = "email@email.com";
   };
+
+  programs.gh = {
+  	enable = true;
+	gitCredentialHelper.enable = true;
+  };
   
 
   # This value determines the Home Manager release that your configuration is
